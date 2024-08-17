@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import failureSound from "../assets/audios/failure-2.mp3";
+import { audioList } from "../constants";
 
 export const UserGreeting = () => {
   const [name, setName] = useState("");
@@ -7,7 +7,7 @@ export const UserGreeting = () => {
 
   const handlePlayButton = () => {
     if (!name) {
-      const fa = new Audio(failureSound);
+      const fa = new Audio(audioList.failure);
       fa.play();
       setWarnings(true);
     }
