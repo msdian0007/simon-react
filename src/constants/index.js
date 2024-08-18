@@ -11,17 +11,17 @@ export const blocks = [
   {
     key: 1,
     css: "bg-green-600",
-    css_onClick: "active:bg-green-500 active:scale-110",
-    css_onNext: "bg-green-500 scale-110",
+    css_onClick: "active:bg-green-400 active:scale-110",
+    css_onNext: "bg-green-400 scale-110",
   },
   {
     key: 2,
     css: "bg-red-600",
-    css_onClick: "active:bg-red-500 active:scale-110",
-    css_onNext: "bg-red-500 scale-110",
+    css_onClick: "active:bg-red-400 active:scale-110",
+    css_onNext: "bg-red-400 scale-110",
   },
   {
-    key: null,
+    key: 0,
     css: "",
     css_onClick: "",
     css_onNext: "",
@@ -29,13 +29,13 @@ export const blocks = [
   {
     key: 3,
     css: "bg-yellow-500",
-    css_onClick: "active:bg-yellow-400 active:scale-110",
-    css_onNext: "bg-yellow-500 scale-110",
+    css_onClick: "active:bg-yellow-300 active:scale-110",
+    css_onNext: "bg-yellow-300 scale-110",
   },
   {
     key: 4,
     css: "bg-blue-700",
-    css_onClick: "active:bg-blue-600 active:scale-110",
+    css_onClick: "active:bg-blue-500 active:scale-110",
     css_onNext: "bg-blue-500 scale-110",
   },
 ];
@@ -50,3 +50,9 @@ export const audioList = {
   yellow,
   green,
 };
+
+export const userSchema = {
+  name:"",
+  highScore:0,
+  settings:{},
+}

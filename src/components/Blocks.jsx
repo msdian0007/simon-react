@@ -1,12 +1,13 @@
-import React from 'react'
+import { useGameData } from "../contexts/gameDataContext";
 
-export const Blocks = ({ prop, handleBlockSelection, randomSelection }) => {
-    return (
-        <div
-            onClick={() => handleBlockSelection(prop?.key)}
-            className={` cursor-pointer md:h-[250px] md:w-[250px] h-[150px] w-[150px] ${prop?.css_onClick
-                } transition-all rounded-xl ${prop?.css} ${prop?.key === randomSelection ? prop?.css_onNext : null
-                }`}
-        ></div>
-    )
-}
+export const Blocks = ({ props }) => {
+  const { randomSelection, handleBlockSelection } = useGameData();
+  return (
+    <div
+      onClick={() => handleBlockSelection(props?.key)}
+      className={` cursor-pointer w-full h-0 pb-[90%] ${props?.css_onClick} transition-all rounded-xl ${props?.css} ${
+        props?.key === randomSelection ? props?.css_onNext : null
+      }`}
+    ></div>
+  );
+};

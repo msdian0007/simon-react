@@ -26,5 +26,15 @@ export const useHelper = () => {
     getRandomKey: () => {
       return Math.ceil(Math.random() * 4);
     },
+    getPlayerName: () => {
+      return localStorage.getItem("name");
+    },
+    setPlayerName: (name) => {
+      localStorage.setItem("name", name);
+      return true;
+    },
+    getHighestScore: () => {
+      return localStorage.getItem("hs");
+    },
   };
 };

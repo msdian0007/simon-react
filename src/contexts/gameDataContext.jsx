@@ -1,9 +1,17 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useHelper } from "./useHelper";
+import { userSchema } from "../constants";
 
 const GameContext = createContext();
 
 const GameDataProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const [level, setLevel] = useState(0);
   const [target, setTarget] = useState([]);
   const [targetSteps, setTargetSteps] = useState([]);
@@ -81,6 +89,24 @@ const GameDataProvider = ({ children }) => {
     setTarget([key]);
   };
 
+  const setPlayerName = useCallback((name) => {
+    let localUser;
+    localUser = JSON.parse(localStorage.getItem("user"));
+    localUser["name"] = name;
+    setUser(localUser)
+    localStorage.setItem("user", JSON.stringify(localUser));
+  }, []);
+
+  useEffect(() => {
+    let localUser = localStorage.getItem("user");
+    if (!localUser) localStorage.setItem("user", JSON.stringify(userSchema));
+  }, []);
+
+  useEffect(() => {
+    let localUser = localStorage.getItem("user");
+    if (localUser) setUser(JSON.parse(localUser));
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
       setRandomSelection(0);
@@ -90,6 +116,7 @@ const GameDataProvider = ({ children }) => {
   return (
     <GameContext.Provider
       value={{
+        user,
         level,
         target,
         targetSteps,
@@ -98,6 +125,7 @@ const GameDataProvider = ({ children }) => {
         handleBlockSelection,
         handleRestart,
         handleStart,
+        setPlayerName,
       }}
     >
       {children}

@@ -5,7 +5,6 @@ export const GameOver = () => {
   const { isGameOver } = useGameData();
   const { handleStart, level } = useGameData();
   const hs = localStorage.getItem("hs");
-  console.log(hs);
   if (isGameOver) {
     return (
       <>
