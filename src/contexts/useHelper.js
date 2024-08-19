@@ -2,16 +2,18 @@ import { audioList } from "../constants";
 
 export const useHelper = () => {
   return {
-    playaAudio: (type) => {
+    soundEffect: (type) => {
       let audio;
-      if (type === "START") {
-        audio = new Audio(audioList.start);
+      if (type === "INTRO") {
+        audio = new Audio(audioList.intro);
       } else if (type === "GAME-START") {
         audio = new Audio(audioList.game_start);
       } else if (type === "OVER") {
         audio = new Audio(audioList.over);
       } else if (type === "FAILURE") {
         audio = new Audio(audioList.failure);
+      } else if (type === "RESTART") {
+        audio = new Audio(audioList.restart);
       } else if (type === 1) {
         audio = new Audio(audioList.green);
       } else if (type === 2) {

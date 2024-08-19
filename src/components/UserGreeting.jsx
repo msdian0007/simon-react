@@ -7,15 +7,17 @@ export const UserGreeting = () => {
   const [name, setName] = useState("");
   const [warnings, setWarnings] = useState(0);
 
-  const { playaAudio } = useHelper();
+  const { soundEffect } = useHelper();
   const { user, setPlayerName } = useGameData();
 
   const handlePlayButton = () => {
     if (!name) {
-      playaAudio("FAILURE");
+      soundEffect("FAILURE");
       setWarnings(true);
+    } else {
+      setPlayerName(name);
+      soundEffect("INTRO");
     }
-    setPlayerName(name);
   };
 
   const handleChange = (e) => {

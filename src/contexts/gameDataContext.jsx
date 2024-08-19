@@ -13,89 +13,100 @@ const GameContext = createContext();
 const GameDataProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [level, setLevel] = useState(0);
-  const [target, setTarget] = useState([]);
-  const [targetSteps, setTargetSteps] = useState([]);
+  const [sequence, setSequence] = useState([]);
+  const [playerSeq, setPlayerSeq] = useState([]);
   const [randomSelection, setRandomSelection] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
 
-  const { playaAudio, getRandomKey } = useHelper();
+  const { soundEffect, getRandomKey } = useHelper();
 
-  const checkHighestScore = () => {
-    const hs = localStorage.getItem("hs");
-    if (!hs) {
-      localStorage.setItem("hs", level);
-    } else {
-      if (hs < level) {
-        localStorage.setItem("hs", level);
-      }
+  const setHighestScore = useCallback(() => {
+    let localUser;
+    localUser = JSON.parse(localStorage.getItem("user"));
+    if (localUser.highScore < level) {
+      localUser["highScore"] = level;
+      setUser(localUser);
     }
-  };
+    localStorage.setItem("user", JSON.stringify(localUser));
+  }, [level]);
 
   const gameOver = () => {
-    playaAudio("OVER");
-    checkHighestScore();
+    soundEffect("OVER");
+    setHighestScore();
     setIsGameOver(true);
-    setTarget([]);
-    setTargetSteps([]);
+    setSequence([]);
+    setPlayerSeq([]);
   };
+
+  const handleRandomSelection = useCallback((key, delay = 500) => {
+    setTimeout(() => {
+      soundEffect(key);
+      setRandomSelection(key);
+    }, delay);
+  }, []);
 
   const nextLevel = () => {
     let key = getRandomKey();
-    setTarget((prev) => [...prev, key]);
-    setTargetSteps([]);
-    setTimeout(() => {
-      playaAudio(key);
-      setRandomSelection(key);
-    }, 1000);
+    setSequence((prev) => [...prev, key]);
+    setPlayerSeq([]);
+    handleRandomSelection(key);
     setLevel(level + 1);
   };
 
-  const checkIsPatternCorrect = (key) => {
-    setTargetSteps((prev) => [...prev, key]);
-    let localTargetSteps = [...targetSteps, key];
-    let isCorrect = false;
-    for (let i = 0; i < localTargetSteps.length; i++) {
-      if (target[i] !== localTargetSteps[i]) {
-        isCorrect = false;
+  const checkSequence = (key) => {
+    setPlayerSeq((prev) => [...prev, key]);
+    let latestPlayerSeq = [...playerSeq, key];
+    let isSeqCorrect = false;
+    for (let i = 0; i < latestPlayerSeq.length; i++) {
+      if (sequence[i] !== latestPlayerSeq[i]) {
+        isSeqCorrect = false;
       } else {
-        isCorrect = true;
+        isSeqCorrect = true;
       }
     }
-    if (isCorrect && target.length === localTargetSteps.length) {
+    if (isSeqCorrect && sequence.length === latestPlayerSeq.length) {
+      soundEffect(key);
       nextLevel();
-    } else if (!isCorrect) {
+    } else if (!isSeqCorrect) {
       gameOver();
+    } else {
+      soundEffect(key);
     }
   };
 
   const handleRestart = () => {
+    soundEffect("RESTART");
     setLevel(0);
+    setSequence([]);
+    setPlayerSeq([]);
   };
 
   const handleBlockSelection = (key) => {
-    playaAudio(key);
-    target.length && checkIsPatternCorrect(key);
+    sequence.length && checkSequence(key);
   };
 
   const handleStart = () => {
     setIsGameOver(false);
     setLevel(0);
-    playaAudio("GAME-START");
+    soundEffect("GAME-START");
     const key = getRandomKey();
-    setTimeout(() => {
-      playaAudio(key);
-      setRandomSelection(key);
-    }, 1000);
-    setTarget([key]);
+    handleRandomSelection(key, 1000);
+    setSequence([key]);
   };
 
   const setPlayerName = useCallback((name) => {
     let localUser;
     localUser = JSON.parse(localStorage.getItem("user"));
     localUser["name"] = name;
-    setUser(localUser)
+    setUser(localUser);
     localStorage.setItem("user", JSON.stringify(localUser));
   }, []);
+
+  const remindLastSequence = useCallback(() => {
+    if (!sequence.length) return;
+    let key = sequence[sequence?.length - 1];
+    handleRandomSelection(key);
+  }, [sequence]);
 
   useEffect(() => {
     let localUser = localStorage.getItem("user");
@@ -118,14 +129,15 @@ const GameDataProvider = ({ children }) => {
       value={{
         user,
         level,
-        target,
-        targetSteps,
+        sequence,
+        playerSeq,
         randomSelection,
         isGameOver,
         handleBlockSelection,
         handleRestart,
         handleStart,
         setPlayerName,
+        remindLastSequence,
       }}
     >
       {children}

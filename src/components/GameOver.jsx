@@ -3,8 +3,7 @@ import { ModalLayout } from "../layouts/modal/ModalLayout";
 import { StartButton } from "./StartButton";
 export const GameOver = () => {
   const { isGameOver } = useGameData();
-  const { handleStart, level } = useGameData();
-  const hs = localStorage.getItem("hs");
+  const { handleStart, level, user } = useGameData();
   if (isGameOver) {
     return (
       <>
@@ -17,7 +16,9 @@ export const GameOver = () => {
             </div>
             <div className="text-3xl pb-4 italic">
               Highest Score:{" "}
-              <span className="text-green-500 font-bold">{!hs ? 0 : hs}</span>
+              <span className="text-green-500 font-bold">
+                {user?.highScore}
+              </span>
             </div>
             <div className="text-2xl py-4">
               {" "}

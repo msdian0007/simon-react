@@ -3,7 +3,7 @@ import { useGameData } from "../contexts/gameDataContext";
 export const GameStats = () => {
   const { level, user } = useGameData();
   return (
-    <div className="lg:text-left text-center w-full h-full py-4 flex flex-col justify-between">
+    <div className="lg:text-left text-center w-full h-full flex flex-col justify-between p-4">
       <div>
         <span className="flex items-center pb-6 text-xl">
           Hi,

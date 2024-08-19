@@ -1,4 +1,3 @@
-import React from "react";
 
 export const ModalLayout = ({ children }) => {
   return (

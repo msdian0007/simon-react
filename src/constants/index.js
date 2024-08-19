@@ -1,11 +1,12 @@
-import start from "../assets/audios/start.mp3";
+import intro from "../assets/audios/start.mp3";
 import game_start from "../assets/audios/game-start.mp3";
 import failure from "../assets/audios/failure.mp3";
 import over from "../assets/audios/over.mp3";
 import blue from "../assets/audios/blue.mp3";
 import red from "../assets/audios/red.mp3";
 import yellow from "../assets/audios/yellow.mp3";
-import green from "../assets/audios/green.mp3"; 
+import green from "../assets/audios/green.mp3";
+import restart from "../assets/audios/ohh.mp3";
 
 export const blocks = [
   {
@@ -41,10 +42,11 @@ export const blocks = [
 ];
 
 export const audioList = {
-  start,
+  intro,
   game_start,
   failure,
   over,
+  restart,
   blue,
   red,
   yellow,
@@ -52,7 +54,7 @@ export const audioList = {
 };
 
 export const userSchema = {
-  name:"",
-  highScore:0,
-  settings:{},
-}
+  name: "",
+  highScore: 0,
+  settings: {},
+};

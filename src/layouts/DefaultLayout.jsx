@@ -12,6 +12,7 @@ export const DefaultLayout = ({ children }) => {
       <div className="col-span-1 flex items-center">
         <Settings />
       </div>
+      <div className="block lg:hidden"></div>
     </div>
   );
 };

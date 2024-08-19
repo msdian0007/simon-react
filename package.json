@@ -1,11 +1,11 @@
 {
   "name": "client",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://msdian0007.github.io/simon-react",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "vite build",
